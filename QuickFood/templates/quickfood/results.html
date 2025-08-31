@@ -1,0 +1,41 @@
+{% extends 'quickfood/base.html' %}
+{% block content %}
+<div class="pantry-column">
+    <h1>Your Pantry</h1>
+    <p class="hint">These are the ingredients you have available.</p>
+
+    <!-- Display Pantry Categories -->
+    <div id="pantry-section-results">
+        {% for category, items in pantry.items %}
+            <div class="category">
+                <h3>{{ category|title }}</h3>
+                <ul id="results-{{ category|slugify }}-list">
+                    {% for ing in items %}
+                        <li>{{ ing }}</li>
+                    {% empty %}
+                        <li><em>No items in this category</em></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% empty %}
+            <p>Your pantry is empty.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Recipes Section -->
+<div class="recipes-column">
+    <h2>Recipe Recommendations</h2>
+    {% if recipes %}
+        {% for recipe in recipes %}
+            <div class="recipe-card">
+                <h3>{{ recipe.recipe_name }}</h3>
+                <p><strong>Ingredients:</strong> {{ recipe.ingredient_list|join:", " }}</p>
+                <p><strong>Directions:</strong> {{ recipe.direction_list|join:" | " }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>{{ message }}</p>
+    {% endif %}
+</div>
+{% endblock %}

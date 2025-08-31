@@ -1,0 +1,43 @@
+{% extends 'quickfood/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="pantry-column">
+    <h1>Your Pantry</h1>
+    <p class="hint">Type an ingredient and click Add. We'll auto-categorize it for you.</p>
+
+    <!-- Add Ingredient -->
+    <h3>Add Ingredient</h3>
+    <div class="add-ingredient">
+        <input type="text" id="ingredient" placeholder="Enter ingredient (e.g., chicken, onion)">
+        <button onclick="addToPantry()" class="btn"><i class="fas fa-plus"></i> Add</button>
+    </div>    
+    <div class="hint">Press Enter to add quickly.</div>
+
+    <!-- Pantry Categories -->
+    <div id="pantry-section">
+        {% for category, items in pantry.items %}
+            <div class="category">
+                <h3>{{ category|title }}</h3>
+                <ul id="{{ category|slugify }}-list">
+                    {% for ing in items %}
+                        <li>
+                            {{ ing }}
+                            <button onclick="removeFromPantry('{{ ing }}', this.parentElement)"><i class="fas fa-times"></i> Remove</button>
+                        </li>
+                    {% empty %}
+                        <li><em>No items in this category</em></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% empty %}
+            <p>Your pantry is currently empty. Add some ingredients above!</p>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="recipes-column">
+    <h2>Your Recipe Recommendations Will Appear Here!</h2>
+    <p class="hint">Add ingredients to your pantry, then click "Find Recipes" to see suggestions.</p>
+</div>
+{% endblock %}

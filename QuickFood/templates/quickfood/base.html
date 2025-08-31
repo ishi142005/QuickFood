@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickFood Pantry</title>
+
+    <!-- Favicon -->
+    {% load static %}
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- CSRF token for JS -->
+    <div id="csrf-token" style="display:none" data-token="{{ csrf_token }}"></div>
+
+    <!-- Header -->
+    <header class="navbar">
+        <div class="navbar-container">
+            <a href="{% url 'home' %}" class="brand">QuickFood Pantry</a>
+            <nav class="nav-links">
+                <a class="btn" href="{% url 'get_recipes' %}"><i class="fas fa-search"></i> Find Recipes</a>
+                <a class="btn" href="{% url 'upload_ingredient' %}"><i class="fas fa-camera"></i> Upload Image</a>
+                <a class="btn btn-secondary" href="{% url 'clear_pantry' %}"><i class="fas fa-eraser"></i> Clear Pantry</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="main-content-wrapper">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- JS -->
+    <script src="{% static 'js/scripts.js' %}"></script>
+</body>
+</html>
