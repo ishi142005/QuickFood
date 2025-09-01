@@ -55,8 +55,8 @@ Smart Recipe Generator is a web-based application that suggests recipes based on
 ## 📂 Installation (Local Development)
 
 ```bash
-git clone https://github.com/yourusername/smart-recipe-generator.git
-cd smart-recipe-generator
+git clone https://github.com/ishi142005/QuickFood.git
+cd QuickFood
 python -m venv new_env
 source new_env/Scripts/activate  # On Windows
 pip install -r requirements.txt
