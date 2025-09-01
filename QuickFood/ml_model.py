@@ -4,7 +4,7 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 
 # Path to the trained model
-MODEL_PATH = r"C:\Users\Ishita\Projects\Recipe Recommendation\QuickFood\QuickFood\ml_models\ingredient_model.h5"
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "ml_models", "ingredient_model.h5")
 print(MODEL_PATH)
 print(os.path.exists(MODEL_PATH))
 
