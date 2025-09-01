@@ -52,6 +52,18 @@ Smart Recipe Generator is a web-based application that suggests recipes based on
 
 ---
 
+## 🖼️ Screenshots
+
+**Home / Pantry Page**  
+![Home Page](screenshots/home.png)
+
+**Recipe Results**  
+![Recipe Results](screenshots/result.png)
+
+**Upload Ingredient Image**  
+![Upload Page](screenshots/upload.png)
+
+---
 ## 📂 Installation (Local Development)
 
 ```bash
