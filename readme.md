@@ -6,10 +6,14 @@ Smart Recipe Generator is a web-based application that suggests recipes based on
 
 ## 🔗 Live Demo
 
-👉 [Click here to view the live site](https://your-app-url.onrender.com)
+👉 [Click here to view the live site](https://quickfood-d7oe.onrender.com)
 
 ---
 
+## Git repo
+👉 [Click here to view the live site](https://github.com/ishi142005/QuickFood)
+
+---
 ## 🛠️ Tech Stack
 
 - **Backend**: Django (Python)

@@ -1,13 +1,10 @@
+// Get CSRF token from hidden div
 function getCSRFToken() {
-    const cookies = document.cookie.split(';');
-    for (let c of cookies) {
-        const [name, value] = c.trim().split('=');
-        if (name === 'csrftoken') return decodeURIComponent(value);
-    }
-    return '';
+    const el = document.getElementById('csrf-token');
+    return el ? el.dataset.token : '';
 }
 
-// Add on Enter key
+// Add ingredient on Enter key
 document.addEventListener('DOMContentLoaded', () => {
     const input = document.getElementById('ingredient');
     if (input) {
@@ -20,9 +17,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// Add ingredient to pantry without reloading
 function addToPantry() {
     const input = document.getElementById("ingredient");
-    const ingredient = (input?.value || "").trim().toLowerCase();
+    const ingredient = (input?.value || "").trim();
     if (!ingredient) return;
 
     fetch('/add-to-pantry/', {
@@ -33,13 +31,15 @@ function addToPantry() {
         },
         body: JSON.stringify({ ingredient: [ingredient] })
     })
-    .then(res => {
-        if (!res.ok) throw new Error('Failed to add ingredient');
-        return res.json();
-    })
+    .then(res => res.json())
     .then(data => {
         if (data.success) {
-            window.location.reload(); // ensures categorization applied
+            // Append to the correct category dynamically
+            const pantrySection = document.getElementById('pantry-section');
+            if (pantrySection) {
+                // Here we just reload the pantry section
+                window.location.reload(); // temporary, later we can fully update dynamically
+            }
         }
     })
     .catch(err => {
@@ -51,7 +51,7 @@ function addToPantry() {
     });
 }
 
-
+// Remove ingredient from pantry dynamically
 function removeFromPantry(ingredient, element) {
     fetch('/remove-from-pantry/', {
         method: 'POST',
@@ -61,13 +61,10 @@ function removeFromPantry(ingredient, element) {
         },
         body: JSON.stringify({ ingredient })
     })
-    .then(res => {
-        if (!res.ok) throw new Error('Failed to remove ingredient');
-        return res.json();
-    })
+    .then(res => res.json())
     .then(data => {
         if (data.success && element) {
-            element.remove(); // instant feedback
+            element.remove(); // remove from DOM instantly
         }
     })
     .catch(err => console.error(err));

@@ -3,7 +3,6 @@ from django import forms
 from django.core.files.storage import FileSystemStorage
 from django.http import JsonResponse
 from .models import Recipe
-from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from .ml_model import predict_ingredients
 from rapidfuzz import fuzz, process
@@ -58,7 +57,7 @@ class IngredientImageForm(forms.Form):
 def home(request):
     pantry_items = request.session.get('pantry', [])
     pantry_categories = categorize_pantry(pantry_items)
-    return render(request, 'QuickFood/home.html', {'pantry': pantry_categories})
+    return render(request, 'quickfood/home.html', {'pantry': pantry_categories})
 
 def add_to_pantry(request):
     if request.method == "POST":
@@ -84,7 +83,7 @@ def remove_from_pantry(request):
 def get_recipes(request):
     pantry_items = request.session.get('pantry', [])
     if not pantry_items:
-        return render(request, 'QuickFood/results.html', {
+        return render(request, 'quickfood/results.html', {
             'recipes': [],
             'message': "Your pantry is empty. Please add ingredients.",
             'pantry': categorize_pantry(pantry_items)
@@ -114,17 +113,17 @@ def get_recipes(request):
 
         # Check if any ingredient matches pantry
         recipe_matches = any(
-        normalize(p) in normalize(r_ing) or normalize(r_ing) in normalize(p)
-        for r_ing in recipe_ings
-        for p in pantry_items
-)
+            normalize(p) in normalize(r_ing) or normalize(r_ing) in normalize(p)
+            for r_ing in recipe_ings
+            for p in pantry_items
+        )
         if recipe_matches:
             recipe.ingredient_list = [i.strip() for i in recipe_ings]
             recipe.direction_list = [d.strip() for d in str(recipe.directions).split(".") if d.strip()]
             matched_recipes.append(recipe)
 
     message = "No recipes match your pantry items." if not matched_recipes else ""
-    return render(request, 'QuickFood/results.html', {
+    return render(request, 'quickfood/results.html', {
         'recipes': matched_recipes,
         'pantry': categorize_pantry(pantry_items),
         'message': message
@@ -156,4 +155,4 @@ def upload_ingredient(request):
             return redirect('home')
     else:
         form = IngredientImageForm()
-    return render(request, 'QuickFood/upload.html', {'form': form})
+    return render(request, 'quickfood/upload.html', {'form': form})
