@@ -4,12 +4,13 @@ from django.core.files.storage import FileSystemStorage
 from django.http import JsonResponse
 from .models import Recipe
 from django.conf import settings
-from .ml_model import predict_ingredients
 from rapidfuzz import fuzz, process
 import json
 import ast
 import re
 import os
+
+from .ml_model import predict_ingredients
 
 def clear_pantry(request):
     request.session.pop('pantry', None)
@@ -131,6 +132,7 @@ def get_recipes(request):
 
 
 def upload_ingredient(request):
+    from .ml_model import predict_ingredients
     if request.method == "POST":
         form = IngredientImageForm(request.POST, request.FILES)
         if form.is_valid():

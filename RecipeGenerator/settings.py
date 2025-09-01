@@ -26,6 +26,8 @@ INSTALLED_APPS = [
     'QuickFood',
 ]
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',  # serve static files in production
@@ -102,5 +104,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # -------------------------------
 # OTHER
 # -------------------------------
-DATASET_DIR = BASE_DIR / 'datasets'
+DATASET_DIR = BASE_DIR / 'dataset'
 os.makedirs(DATASET_DIR, exist_ok=True)
