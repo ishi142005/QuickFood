@@ -5,36 +5,30 @@ from tensorflow.keras.preprocessing import image
 
 # Path to the trained model
 MODEL_PATH = os.path.join(os.path.dirname(__file__), "ml_models", "ingredient_model.h5")
-print(MODEL_PATH)
-print(os.path.exists(MODEL_PATH))
-
+print("📍 Model path:", MODEL_PATH)
+print("📦 Model exists:", os.path.exists(MODEL_PATH))
 
 # Load model once when this module is imported
 model = None
-class_labels = None
+# ✅ Hardcoded class labels based on your training classes
+class_labels = [
+    "apple", "banana", "butter", "carrot", "cheese",
+    "chicken", "egg", "garlic", "milk", "onion", "tomato"
+]
 
 def load_ingredient_model():
-    """Load the ingredient classification model and labels."""
-    global model, class_labels
+    """Load the ingredient classification model."""
+    global model
     if not os.path.exists(MODEL_PATH):
         print(f"❌ Model file not found at: {MODEL_PATH}. Image upload will use fallback.")
         return None
     try:
         model = load_model(MODEL_PATH)
-
-        # Load class labels from training directory structure
-        train_dir = os.path.join(os.path.dirname(__file__), "../dataset/train")
-        if os.path.exists(train_dir):
-            class_labels = sorted(os.listdir(train_dir))  # folder names = labels
-        else:
-            class_labels = ["unknown"]  # fallback label
-
         print("✅ Ingredient model loaded successfully!")
         return model
     except Exception as e:
         print(f"❌ Error loading model: {e}")
         model = None
-        class_labels = ["unknown"]
         return None
 
 def predict_ingredients(img_path):

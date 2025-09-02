@@ -1,6 +1,13 @@
 from pathlib import Path
 import os
 from decouple import config
+import logging
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s %(levelname)s %(message)s',
+    handlers=[logging.StreamHandler()]
+)
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
